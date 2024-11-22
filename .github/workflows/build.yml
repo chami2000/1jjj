@@ -19,30 +19,35 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17' # Use your desired Java version
+          java-version: '17'
           distribution: 'temurin'
 
       # Step 3: Build JAR file with Maven
       - name: Build JAR with Maven
         run: mvn clean package
 
-      # Step 4: Download and install Launch4j
-      - name: Download and install Launch4j
+      # Step 4: Install required dependencies
+      - name: Install dependencies for jpackage
         run: |
-          wget https://cyfuture.dl.sourceforge.net/project/launch4j/launch4j-3/3.50/launch4j-3.50-linux-x64.tgz?viasf=1 -O launch4j-3.50-linux-x64.tgz
-          tar -xvzf launch4j-3.50-linux-x64.tgz
-          sudo mv launch4j /usr/local/launch4j
-          sudo ln -s /usr/local/launch4j/launch4j /usr/local/bin/launch4j
+          sudo apt-get update
+          sudo apt-get install -y fakeroot dpkg rpm
 
-      # Step 5: Convert JAR to EXE
-      - name: Convert to EXE
+      # Step 5: Package application into .exe
+      - name: Create EXE using jpackage
         run: |
           mkdir -p output
-          /usr/local/launch4j/launch4j launch4j-config.xml
+          jpackage \
+            --type exe \
+            --input target \
+            --name LTEBandControlApp \
+            --main-jar LTEBandControlApp.jar \
+            --main-class com.example.LTEBandControlApp \
+            --output output \
+            --win-console
 
       # Step 6: Upload EXE as GitHub Artifact
       - name: Upload EXE
         uses: actions/upload-artifact@v3
         with:
           name: LTEBandControlApp
-          path: output/LTEBandControlApp.exe
+          path: output/LTEBandControlApp-*.exe
