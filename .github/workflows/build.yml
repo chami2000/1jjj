@@ -22,7 +22,7 @@ jobs:
           java-version: '17' # Use your desired Java version
           distribution: 'temurin'
 
-      # Step 3: Build JAR file with Maven (run from the root directory where pom.xml is)
+      # Step 3: Build JAR file with Maven
       - name: Build JAR with Maven
         run: mvn clean package
 
@@ -31,17 +31,14 @@ jobs:
         run: |
           wget https://cyfuture.dl.sourceforge.net/project/launch4j/launch4j-3/3.50/launch4j-3.50-linux-x64.tgz?viasf=1 -O launch4j-3.50-linux-x64.tgz
           tar -xvzf launch4j-3.50-linux-x64.tgz
-          sudo mkdir -p /usr/local/launch4j
-          sudo mv launch4j/* /usr/local/launch4j/
+          sudo mv launch4j-3.50 /usr/local/launch4j
           sudo ln -s /usr/local/launch4j/launch4j /usr/local/bin/launch4j
-          # Convert launch4j script to Unix line endings
-          sed -i 's/\r$//' /usr/local/bin/launch4j
 
       # Step 5: Convert JAR to EXE
       - name: Convert to EXE
         run: |
           mkdir -p output
-          launch4j launch4j-config.xml
+          /usr/local/launch4j/launch4j launch4j-config.xml
 
       # Step 6: Upload EXE as GitHub Artifact
       - name: Upload EXE
