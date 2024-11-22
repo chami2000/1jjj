@@ -19,30 +19,30 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '17' # Use your desired Java version
           distribution: 'temurin'
 
       # Step 3: Build JAR file with Maven
       - name: Build JAR with Maven
         run: mvn clean package
 
-      # Step 4: Install required dependencies
+      # Step 4: Install required dependencies for jpackage
       - name: Install dependencies for jpackage
         run: |
           sudo apt-get update
           sudo apt-get install -y fakeroot dpkg rpm
 
-      # Step 5: Package application into .exe
+      # Step 5: Package application into .exe using jpackage
       - name: Create EXE using jpackage
         run: |
           mkdir -p output
           jpackage \
             --type exe \
             --input target \
+            --dest output \         # Use --dest instead of --output
             --name LTEBandControlApp \
             --main-jar LTEBandControlApp.jar \
             --main-class com.example.LTEBandControlApp \
-            --output output \
             --win-console
 
       # Step 6: Upload EXE as GitHub Artifact
