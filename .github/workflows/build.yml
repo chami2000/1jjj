@@ -32,6 +32,8 @@ jobs:
           wget https://cyfuture.dl.sourceforge.net/project/launch4j/launch4j-3/3.50/launch4j-3.50-linux-x64.tgz?viasf=1 -O launch4j-3.50-linux-x64.tgz
           tar -xvzf launch4j-3.50-linux-x64.tgz
           sudo mv launch4j/launch4j /usr/local/bin/
+          # Convert launch4j binary to Unix line endings
+          sed -i 's/\r$//' /usr/local/bin/launch4j
 
       # Step 5: Convert JAR to EXE
       - name: Convert to EXE
