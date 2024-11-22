@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v3
 
       # Step 2: Set up JDK
-      - name: Set up JDK
+        - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17' # Use your desired Java version
@@ -26,12 +26,12 @@ jobs:
       - name: Build JAR with Maven
         run: mvn clean package
 
-      # Step 4: Install Launch4j
+      # Step 4: Download and install Launch4j from provided URL
       - name: Download and install Launch4j
         run: |
-          wget https://github.com/launch4j/launch4j/releases/download/3.15/launch4j-3.15-linux-x64.tar.gz
-          tar -xvzf launch4j-3.15-linux-x64.tar.gz
-          sudo mv launch4j-3.15/launch4j /usr/local/bin/
+          wget https://cyfuture.dl.sourceforge.net/project/launch4j/launch4j-3/3.50/launch4j-3.50-linux-x64.tgz?viasf=1 -O launch4j-3.50-linux-x64.tgz
+          tar -xvzf launch4j-3.50-linux-x64.tgz
+          sudo mv launch4j-3.50/launch4j /usr/local/bin/
 
       # Step 5: Convert JAR to EXE
       - name: Convert to EXE
