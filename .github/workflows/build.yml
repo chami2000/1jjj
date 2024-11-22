@@ -32,7 +32,7 @@ jobs:
           wget https://cyfuture.dl.sourceforge.net/project/launch4j/launch4j-3/3.50/launch4j-3.50-linux-x64.tgz?viasf=1 -O launch4j-3.50-linux-x64.tgz
           tar -xvzf launch4j-3.50-linux-x64.tgz
           sudo mkdir -p /usr/local/launch4j
-          sudo mv launch4j-3.50/* /usr/local/launch4j/
+          sudo mv launch4j/* /usr/local/launch4j/
           sudo ln -s /usr/local/launch4j/launch4j /usr/local/bin/launch4j
           # Convert launch4j script to Unix line endings
           sed -i 's/\r$//' /usr/local/bin/launch4j
