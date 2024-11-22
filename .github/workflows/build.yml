@@ -11,30 +11,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      # Step 2: Set up JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17' # Use your desired Java version
+          distribution: 'temurin'
 
-    - name: Build JAR with Maven
-      run: mvn clean package
+      # Step 3: Build JAR file with Maven
+      - name: Build JAR with Maven
+        run: |
+          cd src # Change directory to the one containing `pom.xml`
+          mvn clean package
 
-    - name: Install Launch4j
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y launch4j
+      # Step 4: Install Launch4j
+      - name: Install Launch4j
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y launch4j
 
-    - name: Convert to EXE
-      run: |
-        mkdir -p output
-        launch4j launch4j-config.xml
+      # Step 5: Convert JAR to EXE
+      - name: Convert to EXE
+        run: |
+          cd ../ # Navigate to the root directory
+          mkdir -p output
+          launch4j launch4j-config.xml
 
-    - name: Upload EXE
-      uses: actions/upload-artifact@v3
-      with:
-        name: LTEBandControlApp
-        path: output/LTEBandControlApp.exe
+      # Step 6: Upload EXE as GitHub Artifact
+      - name: Upload EXE
+        uses: actions/upload-artifact@v3
+        with:
+          name: LTEBandControlApp
+          path: output/LTEBandControlApp.exe
