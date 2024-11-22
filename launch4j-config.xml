@@ -1,0 +1,20 @@
+<launch4jConfig>
+    <dontWrapJar>false</dontWrapJar>
+    <headerType>gui</headerType>
+    <jar>target/LTEBandControlApp.jar</jar>
+    <outfile>output/LTEBandControlApp.exe</outfile>
+    <errTitle>Java Error</errTitle>
+    <cmdLine></cmdLine>
+    <chdir>.</chdir>
+    <priority>normal</priority>
+    <downloadUrl>https://www.java.com/download/</downloadUrl>
+    <supportUrl></supportUrl>
+    <stayAlive>false</stayAlive>
+    <manifest></manifest>
+    <icon>path/to/icon.ico</icon>
+    <jre>
+        <path></path>
+        <minVersion>1.8.0</minVersion>
+        <maxVersion></maxVersion>
+    </jre>
+</launch4jConfig>
