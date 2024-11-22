@@ -26,13 +26,15 @@ jobs:
       - name: Build JAR with Maven
         run: mvn clean package
 
-      # Step 4: Download and install Launch4j from the provided URL
+      # Step 4: Download and install Launch4j
       - name: Download and install Launch4j
         run: |
           wget https://cyfuture.dl.sourceforge.net/project/launch4j/launch4j-3/3.50/launch4j-3.50-linux-x64.tgz?viasf=1 -O launch4j-3.50-linux-x64.tgz
           tar -xvzf launch4j-3.50-linux-x64.tgz
-          sudo mv launch4j/launch4j /usr/local/bin/
-          # Convert launch4j binary to Unix line endings
+          sudo mkdir -p /usr/local/launch4j
+          sudo mv launch4j-3.50/* /usr/local/launch4j/
+          sudo ln -s /usr/local/launch4j/launch4j /usr/local/bin/launch4j
+          # Convert launch4j script to Unix line endings
           sed -i 's/\r$//' /usr/local/bin/launch4j
 
       # Step 5: Convert JAR to EXE
